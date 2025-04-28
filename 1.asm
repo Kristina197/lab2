@@ -1,7 +1,7 @@
 .section .data
-prompt:         .asciz ""
-compressed_msg: .asciz ""
-original_msg:   .asciz ""
+prompt:         .asciz "" # Ввод строки
+compressed_msg: .asciz "" # Для вывода сжатой строки
+original_msg:   .asciz "" # Для вывода исходной строки
 newline:        .asciz "\n"
 
 .section .bss
