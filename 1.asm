@@ -1,7 +1,7 @@
 .section .data
-prompt:         .asciz "Enter string: "
-compressed_msg: .asciz "Compressed: "
-original_msg:   .asciz "Original: "
+prompt:         .asciz ""
+compressed_msg: .asciz ""
+original_msg:   .asciz ""
 newline:        .asciz "\n"
 
 .section .bss
