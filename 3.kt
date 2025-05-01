@@ -1,43 +1,39 @@
+// Функция для переворота числа
+fun reverseNumber(num: Int): Int {
+    var current = num
+    var reversed = 0
+    while (current != 0) {
+        reversed = reversed * 10 + current % 10
+        current /= 10
+    }
+    return reversed
+}
+
 fun main() {
-    print("Введите количество элементов массива: ")
-    val size = readLine()!!.toInt()
+    // Читаем количество чисел
+    val n = readLine()?.toIntOrNull() ?: run {
+        println("Ошибка: требуется целое положительное число для количества элементов")
+        return
+    }
 
-    // Проверка на корректность ввода
-    if (size <= 0) {
+    // Проверяем корректность n
+    if (n <= 0) {
         println("Количество элементов должно быть положительным")
-        return // Завершаем с ошибкой
+        return
     }
 
-    // Создание массива размера size
-    val nums = IntArray(size)
-    println("Введите элементы массива:")
+    // Обрабатываем n чисел
+    repeat(n) {
+        val num = readLine()?.toIntOrNull() ?: run {
+            println("Ошибка: требуется целое положительное число")
+            return
+        }
 
-    // Ввод элементов
-    for (j in 0 until size) {
-        val num = readLine()!!.toInt()
-        // Проверка каждого элемента
         if (num <= 0) {
-            println("Элементы должны быть положительными и целыми")
-            return // Завершаем программу с ошибкой
-        } else {
-            nums[j] = num
+            println("Числа должны быть положительным")
+            return
         }
-    }
 
-    // Обработка и вывод чисел
-    for (i in 0 until size) {
-        if (nums[i] < 10) {
-            continue // Пропускаем числа меньше 10
-        }
-        var rez = 0
-        var originalNum = nums[i] // Сохраняем оригинальное число
-        while (originalNum > 0) {
-            rez = rez * 10 + originalNum % 10
-            originalNum /= 10
-        }
-        // Удаляем ведущие нули (если есть)
-        print("$rez ")
+        println(reverseNumber(num))
     }
-
-    println()
 }
