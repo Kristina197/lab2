@@ -1,44 +1,42 @@
 import sys
 
+# Функция для переворота числа и удаления ведущих нулей
+def revers_num(num):
+    revers = 0
+    while num != 0:  # Переворачиваем число
+        revers = revers * 10 + num % 10
+        num = num // 10  # Целочисленное деление
+    return revers
+
 def main():
-    size = int(input("Введите количество элементов массива: "))
     
+    try:
+        n = int(input())
+    except ValueError:
+        print("Количество элементов должно быть положительным и целым")
+        sys.exit(1)  # Завершаем программу с ошибкой
+        
     # Проверка на корректность ввода
-    if size <= 0:
-        print("Количество элементов должно быть положительным")
-        sys.exit(1)  # Завершаем с ошибкой
-    
-    # Создание списка
-    nums = [0] * size
-    print("Введите элементы массива:")
-    
-    # Ввод элементов
-    for j in range(size):
-        num = int(input())
-        # Проверка каждого элемента
-        if num <= 0:
-            print("Элементы должны быть положительными и целыми")
-            sys.exit(1)  
-        else:
-            nums[j] = num
-    
-    # Обработка и вывод чисел
-    for i in range(size):
-        if nums[i] < 10:
-            continue  # Пропускаем числа меньше 10
-        
-        rez = 0
-        original_num = nums[i]  # Сохраняем оригинальное число
-        
-        while original_num > 0:
-            rez = rez * 10 + original_num % 10
-            original_num = original_num // 10  # Целочисленное деление
-        
-        # Удаление ведущих нулей происходит автоматически
-        print(rez, end=' ')
-    
-    print()  # Перевод строки
-    return 0
+    if n <= 0:
+        print("Количество элементов должно быть положительным и целым")
+        sys.exit(1)
+    else:
+        for _ in range(n):
+            try:
+                num = int(input())
+            except ValueError:
+                print("Числа должны быть положительным и целым")
+                sys.exit(1)
+                
+            # Проверка на корректность ввода
+            if num <= 0:
+                print("Числа должны быть положительным и целым")
+                sys.exit(1)
+            else:
+                # Переворачиваем число и выводим
+                print(revers_num(num), end=" ") 
+
+    sys.exit(0)
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
