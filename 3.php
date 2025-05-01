@@ -1,33 +1,37 @@
 <?php
-$num = 0;
-$count = 0;
-echo "Введите количество элементов массива: ";
-$size = (int)trim(fgets(STDIN));
+// Функция для переворота числа и удаления ведущих нулей
+function revers_num($num) {
+    $revers = 0;
+    while ($num != 0) {  // Переворачиваем число
+        $revers = $revers * 10 + $num % 10;
+        $num = (int)($num / 10);
+    }
+    return $revers;
+}
+setlocale(LC_ALL, "");
+
+// Чтение количества чисел
+$input = trim(fgets(STDIN));
+$n = (int)$input;
 
 // Проверка на корректность ввода
-if ($size <= 0) {
+if ($n <= 0) {
     echo "Количество элементов должно быть положительным и целым" . PHP_EOL;
-    return 1; // Завершаем программу с ошибкой если число не положительное или нецелое
-}
-else {
-    $nums = array(); // Создаем массив
-    echo "Введите элементы массива:" . PHP_EOL;
-    for ($j = 0; $j < $size; $j++) {
-        $num = (int)trim(fgets(STDIN));
-        if ($num <= 0 || $num % 1 != 0) { // Проверка каждого элемента
-            echo "Элементы должны быть положительными и целыми" . PHP_EOL;
-            return 1; // Завершаем с ошибкой
-        }
-        else {
-            $nums[$j] = $num; // Сохраняем значения в массив
+    exit(1); // Завершаем программу с ошибкой
+} else {
+    for ($i = 0; $i < $n; ++$i) {
+        $input = trim(fgets(STDIN));
+        $num = (int)$input;
+        
+        // Проверка на корректность ввода
+        if ($num <= 0) {
+            echo "Числа должны быть положительным и целым" . PHP_EOL;
+            exit(1); // Завершаем программу с ошибкой
+        } else {
+            echo revers_num($num) . " "; // Вызываем функцию revers_num и выводим
         }
     }
+}
 
-    for ($i = 0; $i < $size; $i++) {
-        if (strlen((string)$nums[$i]) % 2 == 1) {
-            $count++;
-        }
-    }
-    echo "Количество чисел с нечетным количеством цифр: " . $count . PHP_EOL;
-}
-return 0;
+exit(0);
+?>
