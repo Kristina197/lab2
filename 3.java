@@ -1,54 +1,55 @@
 import java.util.Scanner;
+import java.util.Locale;
 
 public class Main {
+    
+    // Функция для переворота числа и удаления ведущих нулей
+    public static int revers_num(int num) {
+        int revers = 0;
+        while (num != 0) {  // Переворачиваем число
+            revers = revers * 10 + num % 10;
+            num /= 10;
+        }
+        return revers;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        int n;
         
-        System.out.print("Введите количество элементов массива: ");
-        int size = scanner.nextInt();
+        // Чтение количества чисел
+        if (!scanner.hasNextInt()) {
+            System.out.println("Количество элементов должно быть положительным и целым");
+            System.exit(1);
+        }
+        n = scanner.nextInt();
         
         // Проверка на корректность ввода
-        if (size <= 0) {
-            System.out.println("Количество элементов должно быть положительным");
-            System.exit(1); // Завершаем с ошибкой
-        }
-        
-        // Создание массива (аналог динамического массива в C++)
-        int[] nums = new int[size];
-        System.out.println("Введите элементы массива:");
-        
-        // Ввод элементов
-        for (int j = 0; j < size; j++) {
-            int num = scanner.nextInt();
-            
-            // Проверка каждого элемента
-            if (num <= 0) {
-                System.out.println("Элементы должны быть положительными и целыми");
-                System.exit(1); // В Java память освобождается автоматически
-            } else {
-                nums[j] = num;
+        if (n <= 0) {
+            System.out.println("Количество элементов должно быть положительным и целым");
+            System.exit(1);
+        } else {
+            for (int i = 0; i < n; ++i) {
+                int num;
+                
+                // Проверка на корректность ввода числа
+                if (!scanner.hasNextInt()) {
+                    System.out.println("Числа должны быть положительным и целым");
+                    System.exit(1);
+                }
+                num = scanner.nextInt();
+                
+                // Проверка на положительность числа
+                if (num <= 0) {
+                    System.out.println("Числа должны быть положительным и целым");
+                    System.exit(1);
+                } else {
+                    // Переворачиваем число и выводим
+                    System.out.print(revers_num(num) + " ");
+                }
             }
         }
         
-        // Обработка и вывод чисел
-        for (int i = 0; i < size; i++) {
-            if (nums[i] < 10) {
-                continue; // Пропускаем числа меньше 10
-            }
-            
-            int rez = 0;
-            int originalNum = nums[i]; // Сохраняем оригинальное число
-            
-            while (originalNum > 0) {
-                rez = rez * 10 + originalNum % 10;
-                originalNum /= 10;
-            }
-            
-            // Удаление ведущих нулей происходит автоматически
-            System.out.print(rez + " ");
-        }
-        
-        System.out.println();
         scanner.close();
         System.exit(0);
     }
