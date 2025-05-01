@@ -1,48 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-	setlocale(LC_ALL, "");
-	int size;
-	cout << "Введите количество элементов массива: ";
-	cin >> size;
-	//Проверка на корректность ввода
-	if (size <= 0) {
-		cout << "Количество элементов должно быть положительным" << endl;
-		return 1;//Завершаем с ошибкой
-	}
-	//Создание динамического массива размера size
-	int* nums = new int[size];
-	cout << "Введите элементы массива:" << endl;
-	//Ввод элементов
-	for (int j = 0; j < size; j++) {
-		int num;
-		cin >> num;
-		//Проверка каждого элемента
-		if (num <= 0) {
-			cout << "Элементы должны быть положительными и целыми" << endl;
-			delete[] nums; // Освобождаем память
-			return 1; // Завершаем программу с ошибкой
-		}
-		else {
-			nums[j] = num;
-		}
-	}
+// Функция для переворота числа и удаления ведущих нулей
+int revers_num(int num) {
+    int revers = 0;
+    while (num != 0) {  // Переворачиваем число
+        revers = revers * 10 + num % 10;
+        num /= 10;
+    }
+    return revers;
+}
 
-	for (int i = 0; i < size; i++) {
-		if (nums[i] < 10) {
-			continue; // Пропускаем числа меньше 10
-		}
-		int rez = 0;
-		int original_num = nums[i]; // Сохраняем оригинальное число для вывода
-		while (original_num > 0) {
-			rez = rez * 10 + original_num % 10;
-			original_num /= 10;
-		}
-		// Удаляем ведущие нули (если есть)
-		cout << rez << " ";
-	}
-	cout << endl;
-	delete[] nums;
-	return 0;
+int main() {
+    setlocale(LC_ALL, "");
+    int n;
+    cin >> n;
+    //Проверка на корректность ввода
+    if (n <= 0) {
+        cout << "Количество элементов должно быть положительным и целым" << endl;
+        return 1; // Завершаем программу с ошибкой если число не положительное или нецелое
+    }
+    else {
+        for (int i = 0; i < n; ++i) {
+            int num; 
+            cin >> num;
+            //Проверка на корректность ввода
+            if (num <= 0) {
+                cout << "Числа должны быть положительным и целым" << endl;
+                return 1; // Завершаем программу с ошибкой если число не положительное или нецелое
+            }
+            else {
+                cout << revers_num(num) << " ";    // Вызываем функцию revers_num и выводим
+            }
+
+        }
+    }
+
+    return 0;
 }
