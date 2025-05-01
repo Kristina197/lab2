@@ -1,54 +1,52 @@
 use std::io;
+use std::process;
 
-fn main() -> io::Result<()> {
-    println!("Введите количество элементов массива: ");
+// Функция для переворота числа и удаления ведущих нулей
+fn revers_num(mut num: i32) -> i32 {
+    let mut revers = 0;
+    while num != 0 {  // Переворачиваем число
+        revers = revers * 10 + num % 10;
+        num /= 10;
+    }
+    revers
+}
+
+fn main() {
     let mut input = String::new();
-    io::stdin().read_line(&mut input)?;
-    let size: i32 = input.trim().parse().unwrap_or(0);
+    io::stdin().read_line(&mut input).expect("Ошибка чтения");
+    let n: i32 = match input.trim().parse() {
+        Ok(num) => num,
+        Err(_) => {
+            println!("Количество элементов должно быть положительным и целым");
+            process::exit(1);
+        }
+    };
 
     // Проверка на корректность ввода
-    if size <= 0 {
-        println!("Количество элементов должно быть положительным");
-        std::process::exit(1); // Завершаем с ошибкой
-    }
+    if n <= 0 {
+        println!("Количество элементов должно быть положительным и целым");
+        process::exit(1);
+    } else {
+        for _ in 0..n {
+            let mut num_input = String::new();
+            io::stdin().read_line(&mut num_input).expect("Ошибка чтения");
+            let num: i32 = match num_input.trim().parse() {
+                Ok(num) => num,
+                Err(_) => {
+                    println!("Числа должны быть положительным и целым");
+                    process::exit(1);
+                }
+            };
 
-    // Создание динамического массива (вектора) размера size
-    let mut nums: Vec<i32> = Vec::with_capacity(size as usize);
-    println!("Введите элементы массива:");
-
-    // Ввод элементов
-    for _ in 0..size {
-        let mut num_input = String::new();
-        io::stdin().read_line(&mut num_input)?;
-        let num: i32 = num_input.trim().parse().unwrap_or(0);
-        
-        // Проверка каждого элемента
-        if num <= 0 {
-            println!("Элементы должны быть положительными и целыми");
-            std::process::exit(1); // В Rust память освобождается автоматически
-        } else {
-            nums.push(num);
+            // Проверка на корректность ввода
+            if num <= 0 {
+                println!("Числа должны быть положительным и целым");
+                process::exit(1);
+            } else {
+                print!("{} ", revers_num(num));  // Вызываем функцию revers_num и выводим
+            }
         }
     }
 
-    // Обработка и вывод чисел
-    for i in 0..nums.len() {
-        if nums[i] < 10 {
-            continue; // Пропускаем числа меньше 10
-        }
-        
-        let mut rez = 0;
-        let mut original_num = nums[i]; // Сохраняем оригинальное число
-        
-        while original_num > 0 {
-            rez = rez * 10 + original_num % 10;
-            original_num /= 10;
-        }
-        
-        // Удаление ведущих нулей происходит автоматически при выводе числа
-        print!("{} ", rez);
-    }
-
-    println!();
-    Ok(())
-}
+    process::exit(0);
+} 
