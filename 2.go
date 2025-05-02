@@ -3,38 +3,47 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
 
-// Функция для переворота числа и удаления ведущих нулей
-func revers_num(num int) int {
-	revers := 0
-	for num != 0 { // Переворачиваем число
-		revers = revers*10 + num%10
-		num /= 10
-	}
-	return revers
-}
-
 func main() {
-	var n int
-	_, err := fmt.Scan(&n)
+	var num int
+	count := 0
+	var size int
+
+	fmt.Print("Введите количество элементов массива: ")
+	_, err := fmt.Scan(&size)
+	if err != nil {
+		fmt.Println("Ошибка ввода")
+		os.Exit(1)
+	}
+
 	// Проверка на корректность ввода
-	if err != nil || n <= 0 {
+	if size <= 0 {
 		fmt.Println("Количество элементов должно быть положительным и целым")
 		os.Exit(1) // Завершаем программу с ошибкой если число не положительное или нецелое
 	} else {
-		for i := 0; i < n; i++ {
-			var num int
+		nums := make([]int, size) // Создаем динамический массив размера size
+		fmt.Println("Введите элементы массива:")
+		for j := 0; j < size; j++ {
 			_, err := fmt.Scan(&num)
-			// Проверка на корректность ввода
-			if err != nil || num <= 0 {
-				fmt.Println("Числа должны быть положительным и целым")
-				os.Exit(1) // Завершаем программу с ошибкой если число не положительное или нецелое
+			if err != nil {
+				fmt.Println("Ошибка ввода")
+				os.Exit(1)
+			}
+			if num <= 0 || num%1 != 0 { // Проверка каждого элемента
+				fmt.Println("Элементы должны быть положительными и целыми")
+				os.Exit(1) // Завершаем с ошибкой
 			} else {
-				fmt.Printf("%d ", revers_num(num)) // Вызываем функцию revers_num и выводим
+				nums[j] = num // Сохраняем значения в массив
 			}
 		}
-	}
 
-	os.Exit(0)
+		for i := 0; i < size; i++ {
+			if len(strconv.Itoa(nums[i]))%2 == 1 {
+				count++
+			}
+		}
+		fmt.Printf("Количество чисел с нечетным количеством цифр: %d\n", count)
+	}
 }
